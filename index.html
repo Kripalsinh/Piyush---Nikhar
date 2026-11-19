@@ -35,6 +35,7 @@
   --display:'Shrikhand','Rasa',serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden}
 body{
   font-family:var(--gu);color:var(--ink);font-size:18px;line-height:1.75;
@@ -88,7 +89,7 @@ a{color:inherit}
 }
 .env-ganesh img{width:100%;height:100%;object-fit:cover;object-position:50% 25%;border-radius:999px 999px 7px 7px;border:2px solid #fff6e0}
 @keyframes glow{50%{box-shadow:0 0 70px rgba(240,210,140,.55), 0 20px 40px -16px rgba(0,0,0,.7)}}
-@media (max-height:740px){ .env-ganesh{width:clamp(96px,26vw,130px)} .envelope{width:min(250px,64vw)!important;margin:16px auto 14px!important} }
+@media (max-height:860px){ .env-ganesh{width:clamp(96px,26vw,130px)} .envelope{width:min(250px,64vw)!important;margin:16px auto 14px!important} }
 .env-top{font-family:var(--gu);font-size:17px;color:var(--gold-l);letter-spacing:.02em}
 .env-guest{margin-top:10px;font-size:20px;color:#fff6e0;min-height:1em}
 .envelope{
@@ -115,13 +116,16 @@ a{color:inherit}
 }
 .envelope .seal{
   position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);z-index:3;
-  width:74px;height:74px;border-radius:50%;
-  background:radial-gradient(circle at 35% 30%, #d44a4f, #a3202a 55%, #7a1219);
-  box-shadow:0 6px 14px rgba(0,0,0,.35), inset 0 0 0 4px rgba(255,255,255,.08);
-  display:grid;place-items:center;color:#f6dc9a;font-family:var(--display);font-size:22px;
+  width:clamp(84px,26vw,104px);aspect-ratio:1;
+  border-radius:52% 48% 50% 50% / 49% 52% 48% 51%;   /* hand-pressed wax */
+  background:radial-gradient(circle at 34% 28%, #e0595d 0%, #b0262f 38%, #8c1820 70%, #6c0f16 100%);
+  box-shadow:0 8px 18px rgba(0,0,0,.4), inset 0 3px 6px rgba(255,255,255,.18), inset 0 -6px 10px rgba(0,0,0,.35);
+  display:grid;place-items:center;color:#f3d58f;
   transition:opacity .4s, transform .5s;
 }
-.envelope .seal::before{content:"";position:absolute;inset:7px;border-radius:50%;border:1px dashed rgba(246,220,154,.6)}
+.envelope .seal::before{content:"";position:absolute;inset:8%;border-radius:50%;
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.45), 0 1px 0 rgba(255,255,255,.18)}
+.envelope .seal svg{width:84%;height:84%;filter:drop-shadow(0 1px 0 rgba(0,0,0,.45)) drop-shadow(0 -1px 0 rgba(255,235,190,.25))}
 #envelope.opening .flap{transform:rotateX(180deg)}
 #envelope.opening .seal{opacity:0;transform:translate(-50%,-50%) scale(1.4)}
 .env-names{font-family:var(--display);font-size:clamp(30px,8vw,40px);line-height:1.2}
@@ -235,12 +239,45 @@ section{position:relative;padding:90px 0}
   font-family:'Pinyon Script',cursive;font-size:42px;color:var(--gold-d)
 }
 .batuk{
-  margin:56px auto 0;max-width:620px;text-align:center;padding:28px 26px;border-radius:16px;
-  background:linear-gradient(180deg,#fff9ec,#fbf0d8);box-shadow:inset 0 0 0 1px var(--line);
+  position:relative;margin:72px auto 0;max-width:860px;display:grid;grid-template-columns:auto 1fr;gap:46px;align-items:center;
+  padding:40px 46px;border-radius:26px;overflow:hidden;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,.9), transparent 45%),
+    linear-gradient(135deg,#fffaf0 0%,#fbf0d8 55%,#f4dfb4 100%);
+  box-shadow:0 30px 60px -28px rgba(90,60,15,.45);
 }
-.batuk .t{font-weight:700;color:var(--kumkum);font-size:19px}
-.batuk .n{font-family:var(--display);font-size:38px;color:var(--green);line-height:1.3}
-.batuk p{color:var(--muted);font-size:17px}
+.batuk::before{ /* gradient gold border */
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;
+  background:linear-gradient(135deg,var(--gold-l),rgba(230,199,127,.15) 40%,rgba(230,199,127,.15) 60%,var(--gold));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+}
+.batuk::after{ /* faint mandala watermark */
+  content:"";position:absolute;right:-90px;bottom:-90px;width:300px;height:300px;border-radius:50%;pointer-events:none;opacity:.35;
+  background:repeating-conic-gradient(from 0deg, rgba(184,137,59,.25) 0 6deg, transparent 6deg 15deg);
+  -webkit-mask:radial-gradient(circle, transparent 30%, #000 31%, #000 70%, transparent 71%);mask:radial-gradient(circle, transparent 30%, #000 31%, #000 70%, transparent 71%);
+}
+.batuk-photo{position:relative;width:240px;aspect-ratio:4/5}
+.batuk-photo .ring{
+  position:absolute;inset:-9px;border-radius:999px 999px 26px 26px;
+  background:conic-gradient(from var(--ang), #8a6424, #e6c77f, #fff3c9, #b8893b, #8a6424, #e6c77f, #fff3c9, #8a6424);
+  animation:ang 6s linear infinite;box-shadow:0 0 34px rgba(230,199,127,.55);
+}
+.batuk-photo .pic{position:relative;width:100%;height:100%;border-radius:999px 999px 18px 18px;overflow:hidden;border:4px solid #fffaf0;box-shadow:0 22px 40px -18px rgba(70,45,10,.6)}
+.batuk-photo img{width:100%;height:100%;object-fit:cover;object-position:42% 20%;transform:scale(1.3);transform-origin:41% 38%}
+.badge-s{position:absolute;left:50%;bottom:-14px;translate:-50% 0;z-index:2;background:var(--kumkum);color:#fff1d0;font-family:var(--gu-sans);font-size:14px;padding:4px 18px;border-radius:20px;box-shadow:0 8px 16px -8px rgba(163,32,42,.8), inset 0 0 0 1px rgba(255,220,160,.4)}
+.batuk-info{position:relative;z-index:1}
+.batuk .t{font-weight:700;color:var(--kumkum);font-size:20px}
+.batuk .n{font-family:var(--display);font-size:clamp(40px,8vw,54px);line-height:1.35;display:inline-block}
+.batuk .par{color:var(--muted);font-size:17px;margin-top:4px}
+.batuk .batuk-vow{font-style:italic;color:var(--green-m);font-size:18px;margin-top:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chips span{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:30px;font-family:var(--gu-sans);font-size:14px;color:var(--green);background:rgba(255,255,255,.65);box-shadow:inset 0 0 0 1px var(--gold-l);backdrop-filter:blur(4px)}
+.chips svg{width:14px;height:14px;color:var(--gold-d)}
+@media (max-width:720px){
+  .batuk{grid-template-columns:1fr;text-align:center;padding:40px 22px 30px;gap:36px}
+  .batuk-photo{width:210px;margin:0 auto}
+  .chips{justify-content:center}
+}
 
 /* ---------- moments ---------- */
 .moments{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:center;max-width:960px;margin:0 auto}
@@ -248,7 +285,6 @@ section{position:relative;padding:90px 0}
 .polaroid{background:#fff;padding:12px 12px 52px;box-shadow:0 20px 40px -18px rgba(60,40,10,.45);position:relative;transition:transform .5s}
 .polaroid img{width:100%;aspect-ratio:var(--ar,4/3);object-fit:cover}
 .polaroid figcaption{position:absolute;left:0;right:0;bottom:12px;text-align:center;font-family:var(--gu);font-style:italic;color:var(--green-m);font-size:19px}
-.polaroid:hover{transform:rotate(0) scale(1.02)!important}
 .p1{transform:rotate(-2.5deg)}
 .p2{transform:rotate(2.5deg);--ar:3/4;max-width:360px;margin:0 auto}
 .quote{
@@ -288,9 +324,9 @@ section{position:relative;padding:90px 0}
 
 /* ---------- countdown ---------- */
 #countdown{background:linear-gradient(180deg,rgba(31,61,43,.04),rgba(31,61,43,.09));text-align:center}
-.cd{display:flex;justify-content:center;gap:clamp(10px,3vw,24px);flex-wrap:wrap;margin-top:10px}
+.cd{display:flex;justify-content:center;gap:clamp(8px,2.5vw,24px);flex-wrap:wrap;margin-top:10px}
 .cd div{
-  width:clamp(74px,20vw,128px);aspect-ratio:1;border-radius:50%;display:grid;place-content:center;
+  width:clamp(64px,18.5vw,128px);aspect-ratio:1;border-radius:50%;display:grid;place-content:center;
   background:var(--paper);box-shadow:0 0 0 1px var(--gold), 0 0 0 7px var(--paper), 0 0 0 8px var(--line), var(--shadow);
 }
 .cd b{font-family:var(--gu);font-size:clamp(28px,7vw,48px);color:var(--green);line-height:1}
@@ -361,16 +397,265 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
 .toast.show{opacity:1;translate:-50% 0}
 #petals{position:fixed;inset:0;pointer-events:none;z-index:50}
 
+/* ---------- crest monogram ---------- */
+.crest-ring{transform-box:view-box;transform-origin:100px 100px;animation:spin 90s linear infinite}
+.crest-lg{display:block;width:clamp(150px,40vw,190px);height:auto;margin:0 auto 22px;color:var(--gold-l);
+  filter:drop-shadow(0 0 18px rgba(230,199,127,.35))}
+
+/* ---------- sticky glass navigation ---------- */
+#topnav{
+  position:fixed;top:12px;left:50%;translate:-50% -150%;opacity:0;z-index:80;
+  display:flex;gap:2px;padding:5px;border-radius:40px;max-width:calc(100% - 24px);overflow-x:auto;scrollbar-width:none;
+  background:rgba(255,251,242,.74);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);
+  box-shadow:0 12px 30px -14px rgba(60,40,10,.4), inset 0 0 0 1px rgba(184,137,59,.45);
+  transition:translate .55s cubic-bezier(.2,.8,.2,1), opacity .4s;
+}
+#topnav::-webkit-scrollbar{display:none}
+#topnav.show{translate:-50% 0;opacity:1}
+#topnav a{flex:none;text-decoration:none;font-family:var(--gu-sans);font-size:14.5px;color:var(--green);padding:7px 15px;border-radius:30px;white-space:nowrap;transition:background .35s,color .35s}
+#topnav a:hover{background:rgba(184,137,59,.12)}
+#topnav a.active{background:linear-gradient(180deg,#2f5a3c,#1f3d2b);color:#fbefcf;box-shadow:inset 0 0 0 1px rgba(230,199,127,.5)}
+section,header{scroll-margin-top:70px}
+
+/* ---------- moving name ribbon ---------- */
+.ribbon{position:relative;overflow:hidden;padding:15px 0;
+  background:linear-gradient(90deg,#132a1c,#1f3d2b 50%,#132a1c);
+  border-block:1px solid var(--gold);box-shadow:inset 0 3px 0 -2px rgba(230,199,127,.35), inset 0 -3px 0 -2px rgba(230,199,127,.35)}
+.ribbon::before,.ribbon::after{content:"";position:absolute;top:0;bottom:0;width:60px;z-index:1;pointer-events:none}
+.ribbon::before{left:0;background:linear-gradient(90deg,#132a1c,transparent)}
+.ribbon::after{right:0;background:linear-gradient(-90deg,#132a1c,transparent)}
+.ribbon .track{display:flex;align-items:center;width:max-content;animation:marq 45s linear infinite}
+.ribbon.rev .track{animation-direction:reverse}
+.ribbon .track > *{margin-right:30px;white-space:nowrap}
+.ribbon span{font-family:var(--gu);font-size:20px;font-weight:600;color:var(--gold-l);line-height:1.4}
+.ribbon span.en{font-family:'Pinyon Script',cursive;font-size:28px;font-weight:400;color:#f4e6c4}
+.ribbon b{color:var(--gold);font-size:14px;font-weight:400}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ---------- full-bleed photo quote band ---------- */
+.band{
+  position:relative;min-height:min(80vh,660px);display:grid;place-items:center;text-align:center;padding:90px 24px;color:#fff6e0;
+  background:linear-gradient(180deg,rgba(12,28,18,.5),rgba(12,28,18,.8)),url(images/couple-1.jpg) 22% 40%/cover fixed;
+}
+@media (hover:none),(max-width:900px){ .band{background-attachment:scroll} }
+.band::before{content:"";position:absolute;inset:22px;border:1px solid rgba(230,199,127,.55);outline:1px solid rgba(230,199,127,.22);outline-offset:6px;pointer-events:none}
+.band-in{max-width:760px}
+.band-title.gold-text{background-image:linear-gradient(100deg,#e6c77f 0%,#fff3c9 25%,#f0d995 50%,#fff3c9 75%,#e6c77f 100%);
+  filter:drop-shadow(0 2px 10px rgba(0,0,0,.45))}
+.band .eyebrow{color:var(--gold-l)}
+.band-title{font-family:var(--gu);font-weight:700;font-size:clamp(30px,6.4vw,54px);line-height:1.45;margin:10px 0 6px}
+.band-sub{font-family:'Pinyon Script',cursive;font-size:clamp(26px,5vw,36px);color:#f4e6c4;opacity:.95}
+.band .divider{color:var(--gold-l)}
+
+/* ---------- saptapadi flip cards ---------- */
+.vows{display:flex;flex-wrap:wrap;justify-content:center;gap:22px}
+.vow{width:232px;height:310px;perspective:1100px;border:0;background:none;padding:0;cursor:pointer;font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+.vow-in{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .85s cubic-bezier(.3,.7,.2,1)}
+.vow.flipped .vow-in{transform:rotateY(180deg)}
+.vow:hover:not(.flipped) .vow-in{transform:rotateY(10deg)}
+.vow-f,.vow-b{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:120px 120px 16px 16px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 22px;text-align:center}
+.vow-f{background:linear-gradient(180deg,#fffdf8,#fbefd5);
+  box-shadow:0 22px 44px -22px rgba(90,60,15,.5), inset 0 0 0 1px var(--line), inset 0 0 0 7px #fffdf8, inset 0 0 0 8px rgba(184,137,59,.35)}
+.vow-b{transform:rotateY(180deg);background:radial-gradient(circle at 50% 0%,#3a6b48,#1f3d2b 60%,#16301f);color:#f4e6c4;
+  box-shadow:0 22px 44px -22px rgba(0,0,0,.6), inset 0 0 0 1px var(--gold-l), inset 0 0 0 7px #1f3d2b, inset 0 0 0 8px rgba(230,199,127,.45)}
+.vow .num{width:66px;height:66px;border-radius:50%;display:grid;place-items:center;font-family:var(--gu);font-weight:700;font-size:32px;color:#fffaf0;
+  background:radial-gradient(circle at 35% 30%,#f6e2a6,#c9a050 55%,#8a6424);box-shadow:0 10px 20px -8px rgba(138,100,36,.8), inset 0 0 0 2px rgba(255,250,235,.5);margin-bottom:16px}
+.vow .vt{font-family:var(--gu);font-weight:700;font-size:23px;color:var(--green);line-height:1.4}
+.vow .vs{font-size:16.5px;color:var(--gold-d);margin-top:2px;line-height:1.5}
+.vow .tap{margin-top:20px;font-family:var(--gu-sans);font-size:13px;color:var(--muted);display:inline-flex;gap:6px;align-items:center}
+.vow-b .vt{color:var(--gold-l)}
+.vow-b .feet{font-family:var(--gu);font-weight:700;font-size:20px;letter-spacing:3px;color:var(--gold-l);opacity:.85;margin-bottom:6px}
+.vow .vb{margin-top:10px;font-size:17.5px;line-height:1.75}
+.vow:focus-visible{outline:none}
+.vow:focus-visible .vow-f,.vow:focus-visible .vow-b{outline:2px solid var(--gold);outline-offset:4px}
+.swipe-hint{display:none;text-align:center;font-family:var(--gu-sans);font-size:13px;color:var(--muted);margin-top:4px}
+@media (max-width:600px){
+  .vows{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 22px 26px;margin:0 -22px;scrollbar-width:none}
+  .vows::-webkit-scrollbar{display:none}
+  .vow{flex:none;width:72vw;max-width:270px;scroll-snap-align:center}
+  .swipe-hint{display:block}
+}
+
+/* ---------- scratch to reveal ---------- */
+.scratch{position:relative;max-width:460px;aspect-ratio:1.5;margin:0 auto;border-radius:20px;overflow:hidden;
+  box-shadow:0 26px 50px -24px rgba(90,60,15,.55), 0 0 0 1px var(--gold), 0 0 0 8px var(--paper), 0 0 0 9px var(--line)}
+@media (max-width:480px){ .scratch{aspect-ratio:1.3} }
+.scratch-under{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px;
+  background:radial-gradient(circle at 50% 25%,#fffdf6,#f5e5c1)}
+.su-eyebrow{font-family:var(--gu-sans);color:var(--kumkum);font-weight:600;font-size:15px}
+.su-day{font-family:var(--display);font-size:clamp(38px,10vw,52px);line-height:1.35}
+.su-date{font-weight:700;color:var(--green);font-size:20px;line-height:1.5}
+.su-time{font-weight:700;color:var(--gold-d);font-size:23px;line-height:1.5}
+.su-tithi{font-size:14px;color:var(--muted)}
+#scratchCv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:pointer;transition:opacity .9s ease}
+.scratch.done #scratchCv{opacity:0;pointer-events:none}
+.scratch.done{animation:revealGlow 1.6s ease}
+@keyframes revealGlow{40%{box-shadow:0 0 60px rgba(230,199,127,.8), 0 0 0 1px var(--gold), 0 0 0 8px var(--paper), 0 0 0 9px var(--line)}}
+.scratch-skip{text-align:center;margin-top:18px}
+.link-btn{background:none;border:0;font-family:var(--gu-sans);font-size:14px;color:var(--gold-d);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
+/* ---------- private sender page ---------- */
+#sender{position:fixed;inset:0;z-index:110;overflow-y:auto;padding:24px 14px 40px;
+  background:radial-gradient(circle at 50% 0%, #2f5a3c 0%, #1f3d2b 55%, #142a1d 100%)}
+#sender[hidden]{display:none}
+.snd-card{width:min(560px,100%);margin:10px auto;background:var(--paper);border-radius:24px;padding:30px clamp(18px,5vw,36px) 26px;text-align:center;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.6), inset 0 0 0 1px var(--gold-l), inset 0 0 0 8px var(--paper), inset 0 0 0 9px rgba(184,137,59,.3)}
+.snd-crest{display:block;width:92px;margin:0 auto 6px;color:var(--gold)}
+.snd-eyebrow{font-family:var(--gu-sans);font-size:13px;color:var(--kumkum);font-weight:600}
+.snd-title{font-family:var(--gu);font-size:32px;font-weight:700;color:var(--green);line-height:1.3}
+.snd-sub{color:var(--muted);font-size:16px;margin-top:4px}
+.btn-gold{background:linear-gradient(180deg,#f0d995,#c9a050 55%,#a8802f);color:#2a1d08;box-shadow:0 10px 22px -10px rgba(138,100,36,.8), inset 0 0 0 1px rgba(255,250,230,.6)}
+.btn-ghost{background:transparent;color:var(--green);box-shadow:inset 0 0 0 1px var(--gold)}
+.snd-pick{width:100%;justify-content:center;margin-top:18px;padding:13px}
+.sfld{display:grid;gap:6px;text-align:left;margin-top:16px}
+.sfld > span{font-family:var(--gu-sans);font-size:14px;color:var(--gold-d);font-weight:600}
+.sfld input,.sfld textarea{width:100%;font-family:var(--gu);font-size:17px;color:var(--ink);padding:11px 14px;border-radius:12px;border:0;resize:vertical;
+  background:#fffdf8;box-shadow:inset 0 0 0 1px rgba(184,137,59,.45);transition:box-shadow .25s}
+.sfld textarea{font-size:15px;line-height:1.6}
+.sfld input:focus,.sfld textarea:focus{outline:none;box-shadow:inset 0 0 0 2px var(--gold), 0 0 0 4px rgba(230,199,127,.25)}
+.snd-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
+.snd-actions .btn{font-size:16px}
+.snd-hint{margin-top:12px;font-size:14px;color:var(--muted);font-style:italic;min-height:1em}
+.snd-log{margin-top:18px;text-align:left;border-top:1px dashed var(--line);padding-top:14px}
+.snd-log-h{font-weight:700;color:var(--green);font-size:17px}
+#sList{list-style:none;margin-top:6px;max-height:240px;overflow-y:auto}
+#sList li{display:flex;justify-content:space-between;gap:10px;padding:6px 2px;border-bottom:1px dotted rgba(184,137,59,.3);font-size:16px}
+#sList li small{color:var(--muted);font-family:var(--gu-sans);font-size:12.5px;white-space:nowrap}
+#sList li.empty{color:var(--muted);font-style:italic;border:0}
+
+/* ---------- calendar buttons ---------- */
+.cal-btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px}
+.cal-btns .btn{font-size:15.5px;background:rgba(255,253,248,.8)}
+
+/* ---------- refined headings ---------- */
+.sec-head .eyebrow,.band .eyebrow{display:inline-flex;align-items:center;gap:12px}
+.sec-head .eyebrow::before,.sec-head .eyebrow::after,.band .eyebrow::before,.band .eyebrow::after{
+  content:"";width:34px;height:1px;background:linear-gradient(90deg,transparent,currentColor)}
+.sec-head .eyebrow::after,.band .eyebrow::after{transform:scaleX(-1)}
+
+/* ---------- premium effects ---------- */
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes ang{to{--ang:360deg}}
+@keyframes shine{to{background-position:200% center}}
+.gold-text{background-size:200% auto;animation:shine 7s linear infinite}
+
+/* scroll progress bar */
+#progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:95;transform-origin:left;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--gold-d),var(--gold-l),#fff3c9,var(--gold));box-shadow:0 0 10px rgba(230,199,127,.8)}
+
+/* shine sweep across photos */
+.photo-arch{overflow:hidden;isolation:isolate}
+.photo-arch::after,.batuk-photo .pic::after{
+  content:"";position:absolute;top:-10%;bottom:-10%;left:-70%;width:45%;pointer-events:none;z-index:2;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-18deg);
+  animation:sweep 6s ease-in-out infinite;
+}
+.batuk-photo .pic::after{animation-delay:1.5s}
+@keyframes sweep{0%,62%{left:-70%}100%{left:140%}}
+
+/* gentle 3D tilt (desktop) */
+[data-tilt]{transition:transform .3s ease-out, rotate .5s, scale .5s;will-change:transform}
+
+/* polaroids keep their tilt after reveal */
+.p1{transform:none;rotate:-2.5deg} .p2{transform:none;rotate:2.5deg}
+.polaroid{transition:transform .9s ease, opacity .9s ease, filter .9s ease, rotate .5s, scale .5s}
+.polaroid:hover{rotate:0deg;scale:1.02}
+
+/* gold dust */
+.dust{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+.dust i{position:absolute;width:var(--s);height:var(--s);border-radius:50%;opacity:0;
+  background:radial-gradient(circle,#fffbe8 0%,#e6c77f 45%,transparent 70%);
+  animation:twinkle var(--d) ease-in-out var(--dl) infinite}
+@keyframes twinkle{0%{opacity:0;transform:translateY(0) scale(.5)}35%{opacity:.95}100%{opacity:0;transform:translateY(-70px) scale(1.15)}}
+#home .arch{z-index:2}
+#envelope .env-inner{z-index:2}
+footer > *:not(.dust){position:relative;z-index:2}
+
+/* blur-in reveal */
+.reveal{filter:blur(6px);transition:opacity .9s ease, transform .9s ease, filter .9s ease}
+.reveal.in{filter:none}
+.ev.reveal.in{transition:transform .3s ease-out, box-shadow .35s}
+.polaroid.reveal.in{transition:transform .3s ease-out, rotate .5s, scale .5s}
+
+/* glowing rings on countdown */
+.cd div{position:relative}
+.cd div::before{content:"";position:absolute;inset:-5px;border-radius:50%;pointer-events:none;
+  background:conic-gradient(from var(--ang),transparent 0 55%,rgba(230,199,127,.2) 65%,var(--gold-l) 85%,#fff3c9 90%,transparent 96%);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2.5px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2.5px));
+  animation:ang 3.5s linear infinite}
+
+/* event cards glow on hover */
+.ev:not(.main):hover{box-shadow:0 28px 60px -24px rgba(184,137,59,.6), inset 0 0 0 1px var(--gold-l)}
+.ev.main{animation:mainGlow 4s ease-in-out infinite}
+@keyframes mainGlow{50%{box-shadow:0 0 0 1px var(--gold-l), 0 0 46px -6px rgba(230,199,127,.55), inset 0 0 0 6px #1f3d2b, inset 0 0 0 7px rgba(230,199,127,.4)}}
+
+/* hero arch soft breathing glow */
+.arch{animation:breathe 7s ease-in-out infinite}
+@keyframes breathe{50%{box-shadow:0 28px 70px -24px rgba(184,137,59,.55), 0 0 0 1px var(--gold), 0 0 0 9px #fffaf0, 0 0 0 10px var(--gold-l), 0 0 60px rgba(230,199,127,.35)}}
+
 @media (prefers-reduced-motion:reduce){
-  .mandala,.env-btn,.scroll-cue span,.env-ganesh{animation:none}
-  .reveal{opacity:1;transform:none;transition:none}
+  .crest-ring,.ribbon .track,.mandala,.env-btn,.scroll-cue span,.env-ganesh,.gold-text,.photo-arch::after,.batuk-photo .pic::after,
+  .batuk-photo .ring,.cd div::before,.ev.main,.arch{animation:none}
+  .dust{display:none}
+  .reveal{opacity:1;transform:none;filter:none;transition:none}
 }
 </style>
 </head>
 <body class="locked">
 
+<!-- P & N crest (used on the envelope seal and in the footer) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="crestRing" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/>
+    <symbol id="crest" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="97" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <circle cx="100" cy="100" r="92.5" fill="none" stroke="currentColor" stroke-width=".6" opacity=".7"/>
+      <circle cx="100" cy="100" r="67" fill="none" stroke="currentColor" stroke-width=".9"/>
+      <circle cx="100" cy="100" r="63.5" fill="none" stroke="currentColor" stroke-width=".4" opacity=".6"/>
+      <g class="crest-ring">
+        <text font-family="'Cormorant Garamond', serif" font-size="12.5" font-weight="600" fill="currentColor">
+          <textPath href="#crestRing" textLength="496" lengthAdjust="spacing">PIYUSH ✦ NIKHAR ✦ 14 · 12 · 2026 ✦ SHUBH VIVAH ✦</textPath>
+        </text>
+      </g>
+      <!-- top ornament -->
+      <path d="M100 41 l4 6 -4 6 -4 -6z" fill="currentColor"/>
+      <circle cx="88" cy="47" r="1.4" fill="currentColor"/><circle cx="112" cy="47" r="1.4" fill="currentColor"/>
+      <!-- laurel -->
+      <g fill="currentColor" opacity=".9">
+        <ellipse cx="100" cy="42" rx="2.4" ry="6.5" transform="rotate(136 100 100) rotate(-40 100 42)"/>
+        <ellipse cx="100" cy="42" rx="2.4" ry="6.5" transform="rotate(146 100 100) rotate(-40 100 42)"/>
+        <ellipse cx="100" cy="42" rx="2.4" ry="6.5" transform="rotate(156 100 100) rotate(-40 100 42)"/>
+        <ellipse cx="100" cy="42" rx="2.4" ry="6.5" transform="rotate(166 100 100) rotate(-40 100 42)"/>
+        <ellipse cx="100" cy="42" rx="2.4" ry="6.5" transform="rotate(194 100 100) rotate(40 100 42)"/>
+        <ellipse cx="100" cy="42" rx="2.4" ry="6.5" transform="rotate(204 100 100) rotate(40 100 42)"/>
+        <ellipse cx="100" cy="42" rx="2.4" ry="6.5" transform="rotate(214 100 100) rotate(40 100 42)"/>
+        <ellipse cx="100" cy="42" rx="2.4" ry="6.5" transform="rotate(224 100 100) rotate(40 100 42)"/>
+        <circle cx="100" cy="160" r="2"/>
+      </g>
+      <!-- monogram -->
+      <text x="82" y="114" text-anchor="middle" font-family="'Pinyon Script', cursive" font-size="64" fill="currentColor">P</text>
+      <text x="121" y="134" text-anchor="middle" font-family="'Pinyon Script', cursive" font-size="64" fill="currentColor">N</text>
+      <path d="M101 128 l-4.2 -4.2 a2.9 2.9 0 0 1 4.2 -4.1 a2.9 2.9 0 0 1 4.2 4.1z" fill="currentColor" opacity=".9"/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav id="topnav" aria-label="વિભાગો">
+  <a href="#nimantran">આમંત્રણ</a>
+  <a href="#couple">વર-કન્યા</a>
+  <a href="#moments">પળો</a>
+  <a href="#events">પ્રસંગો</a>
+  <a href="#saptapadi">સપ્તપદી</a>
+  <a href="#venue">સ્થળ</a>
+  <a href="#family">પરિવાર</a>
+</nav>
+
 <!-- ================= ENVELOPE (કંકોત્રી કવર) ================= -->
+<div id="progress" aria-hidden="true"></div>
 <div id="envelope" role="dialog" aria-label="કંકોત્રી">
+  <div class="dust" aria-hidden="true" data-n="26"></div>
   <div class="env-inner">
     <!-- Shree Ganesh: Ravi Varma Press, c.1910 (public domain). Uses images/ganesh.jpg if present, otherwise loads from Wikimedia Commons. -->
     <figure class="env-ganesh">
@@ -382,7 +667,7 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
     <div class="envelope" id="envClick" aria-hidden="true">
       <div class="body"></div>
       <div class="flap"></div>
-      <div class="seal">પ·નિ</div>
+      <div class="seal"><svg viewBox="0 0 200 200"><use href="#crest"/></svg></div>
     </div>
     <div class="env-names gold-text">પીયૂષ સંગ નિખાર</div>
     <div class="env-line">કંકુ-ચોખાથી વધાવેલી આ કંકોત્રી આપના આશીર્વાદની રાહ જુએ છે.</div>
@@ -391,6 +676,36 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9l9 6 9-6M3 9v10h18V9M3 9l9-6 9 6"/></svg>
       કંકોત્રી ખોલો
     </button>
+  </div>
+</div>
+
+<!-- ================= PRIVATE SENDER PAGE (open with ?send) ================= -->
+<div id="sender" hidden>
+  <div class="snd-card">
+    <svg class="snd-crest" viewBox="0 0 200 200" aria-hidden="true"><use href="#crest"/></svg>
+    <div class="snd-eyebrow">ફક્ત આપના માટે</div>
+    <h1 class="snd-title">આમંત્રણ મોકલો</h1>
+    <p class="snd-sub">મહેમાનનું નામ પસંદ કરો — તેમની કંકોત્રીમાં સૌથી ઉપર તેમનું નામ આવશે.</p>
+    <button class="btn btn-gold snd-pick" id="pickBtn" type="button" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M7.5 17a4.5 4.5 0 0 1 9 0"/></svg>
+      Contact પસંદ કરો
+    </button>
+    <label class="sfld"><span>મહેમાનનું નામ</span><input id="sName" type="text" placeholder="દા.ત. રમેશભાઈ" autocomplete="off"></label>
+    <label class="sfld"><span>WhatsApp નંબર (વૈકલ્પિક — લખશો તો સીધી તેમની chat ખૂલશે)</span><input id="sPhone" type="tel" inputmode="tel" placeholder="98765 43210" autocomplete="off"></label>
+    <label class="sfld"><span>સંદેશ (નામ લખ્યા પછી ફેરફાર કરી શકો)</span><textarea id="sMsg" rows="10"></textarea></label>
+    <div class="snd-actions">
+      <button class="btn btn-gold" id="sSend" type="button">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+        WhatsApp પર મોકલો
+      </button>
+      <button class="btn btn-ghost" id="sCopy" type="button">લિંક કૉપી કરો</button>
+      <a class="btn btn-ghost" id="sPreview" target="_blank" rel="noopener">કંકોત્રી જુઓ</a>
+    </div>
+    <p class="snd-hint" id="sHint"></p>
+    <div class="snd-log">
+      <div class="snd-log-h">મોકલેલ આમંત્રણ <span id="sCount"></span></div>
+      <ul id="sList"><li class="empty">હજી કોઈને મોકલ્યું નથી.</li></ul>
+    </div>
   </div>
 </div>
 
@@ -424,6 +739,7 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
   </div>
 
   <svg class="mandala" id="mandala" viewBox="-200 -200 400 400" aria-hidden="true"></svg>
+  <div class="dust" aria-hidden="true" data-n="30"></div>
 
   <div class="arch reveal">
     <!-- Kalash with sathiyo -->
@@ -478,6 +794,8 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
   <div class="scroll-cue">આગળ જુઓ<span></span></div>
 </header>
 
+<div class="ribbon" aria-hidden="true"><div class="track"></div></div>
+
 <!-- ================= INVITATION LETTER ================= -->
 <section id="nimantran">
   <div class="wrap">
@@ -520,14 +838,14 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
 
     <div class="couple">
       <div class="person reveal">
-        <div class="photo-arch"><img src="images/groom.jpg" alt="ચિ. પીયૂષ" style="object-position:50% 33%" loading="lazy"></div>
+        <div class="photo-arch" data-tilt><img src="images/groom.jpg" alt="ચિ. પીયૂષ" style="object-position:50% 33%" loading="lazy"></div>
         <div class="role">વરરાજા</div>
         <div class="name">ચિ. પીયૂષ</div>
         <div class="parents">અ.સૌ. જયશ્રીબેન તથા શ્રી પ્રભાશંકરભાઈ દયારામભાઈ મહેતાના સુપુત્ર<br>બગધરા</div>
       </div>
       <div class="amp reveal">&amp;</div>
       <div class="person reveal">
-        <div class="photo-arch"><img src="images/bride.jpg" alt="ચિ. નિખાર" style="object-position:50% 45%" loading="lazy"></div>
+        <div class="photo-arch" data-tilt><img src="images/bride.jpg" alt="ચિ. નિખાર" style="object-position:50% 45%" loading="lazy"></div>
         <div class="role">કન્યા</div>
         <div class="name">ચિ. નિખાર</div>
         <div class="parents">અ.સૌ. જોશનાબેન તથા શ્રી અતુલભાઈ વ્રજલાલભાઈ જોશીની સુપુત્રી<br>જામ ખંભાળિયા</div>
@@ -535,12 +853,35 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
     </div>
 
     <div class="batuk reveal">
-      <div class="t">યજ્ઞોપવીત સંસ્કાર</div>
-      <div class="n">ચિ. અક્ષય</div>
-      <p>અ.સૌ. કાજલબેન તથા શ્રી હરસુખભાઈ દયારામભાઈ મહેતાના સુપુત્ર<br>રવિવાર, તા. ૧૩-૧૨-૨૦૨૬ · સવારે ૧૦:૦૦ કલાકે</p>
+      <div class="batuk-photo" data-tilt>
+        <div class="ring"></div>
+        <div class="pic"><img src="images/akshay.jpg" alt="ચિ. અક્ષય" loading="lazy"></div>
+        <span class="badge-s">બટુક</span>
+      </div>
+      <div class="batuk-info">
+        <div class="t">યજ્ઞોપવીત સંસ્કાર</div>
+        <div class="n gold-text">ચિ. અક્ષય</div>
+        <p class="par">અ.સૌ. કાજલબેન તથા શ્રી હરસુખભાઈ દયારામભાઈ મહેતાના સુપુત્ર</p>
+        <p class="batuk-vow">ગાયત્રી મંત્રની દીક્ષા સાથે વિદ્યા અને સંસ્કારના માર્ગે પ્રથમ પગલું...</p>
+        <div class="chips">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>રવિવાર, તા. ૧૩-૧૨-૨૦૨૬</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>સવારે ૧૦:૦૦ કલાકે</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>બ્રહ્મસમાજ, બગધરા</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- ================= PHOTO QUOTE BAND ================= -->
+<div class="band">
+  <div class="band-in reveal">
+    <div class="eyebrow">બે હૈયાં, એક ધબકાર</div>
+    <h2 class="band-title gold-text">સાત ફેરા, સાત વચન,<br>એક જીવનભરનો સાથ</h2>
+    <div class="divider"><svg viewBox="0 0 30 18"><path d="M15 2 C12 8 12 12 15 16 C18 12 18 8 15 2Z M15 16 C10 14 5 12 2 13 C6 9 11 10 15 16Z M15 16 C20 14 25 12 28 13 C24 9 19 10 15 16Z" fill="currentColor"/></svg></div>
+    <div class="band-sub">Two hearts · One journey · Forever</div>
+  </div>
+</div>
 
 <!-- ================= MOMENTS ================= -->
 <section id="moments">
@@ -551,8 +892,8 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
       <svg class="lotus" viewBox="0 0 30 18"><path d="M15 2 C12 8 12 12 15 16 C18 12 18 8 15 2Z M15 16 C10 14 5 12 2 13 C6 9 11 10 15 16Z M15 16 C20 14 25 12 28 13 C24 9 19 10 15 16Z" fill="currentColor"/></svg>
     </div>
     <div class="moments">
-      <figure class="polaroid p1 reveal"><img src="images/couple-1.jpg" alt="પીયૂષ અને નિખાર" style="object-position:30% 40%" loading="lazy"><figcaption>જ્યાંથી સફર શરૂ થઈ...</figcaption></figure>
-      <figure class="polaroid p2 reveal"><img src="images/couple-2.jpg" alt="પીયૂષ અને નિખાર" loading="lazy"><figcaption>હવે જીવનભરનો સાથ</figcaption></figure>
+      <figure class="polaroid p1 reveal" data-tilt><img src="images/couple-1.jpg" alt="પીયૂષ અને નિખાર" style="object-position:30% 40%" loading="lazy"><figcaption>જ્યાંથી સફર શરૂ થઈ...</figcaption></figure>
+      <figure class="polaroid p2 reveal" data-tilt><img src="images/couple-2.jpg" alt="પીયૂષ અને નિખાર" loading="lazy"><figcaption>હવે જીવનભરનો સાથ</figcaption></figure>
     </div>
 
     <div class="quote reveal">
@@ -583,6 +924,43 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
   </div>
 </section>
 
+<!-- ================= SAPTAPADI ================= -->
+<section id="saptapadi">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">અગ્નિની સાક્ષીએ</div>
+      <h2>સપ્તપદી — સાત વચન</h2>
+      <svg class="lotus" viewBox="0 0 30 18"><path d="M15 2 C12 8 12 12 15 16 C18 12 18 8 15 2Z M15 16 C10 14 5 12 2 13 C6 9 11 10 15 16Z M15 16 C20 14 25 12 28 13 C24 9 19 10 15 16Z" fill="currentColor"/></svg>
+      <p>સાત પગલાં, સાત વચન — દરેક કાર્ડને સ્પર્શ કરી તેનો અર્થ જાણો.</p>
+    </div>
+    <div class="vows" id="vows"></div>
+    <p class="swipe-hint">← સરકાવો →</p>
+  </div>
+</section>
+
+<!-- ================= SCRATCH TO REVEAL ================= -->
+<section id="muhurat">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">એક નાનકડું સરપ્રાઈઝ</div>
+      <h2>શુભ મુહૂર્ત</h2>
+      <svg class="lotus" viewBox="0 0 30 18"><path d="M15 2 C12 8 12 12 15 16 C18 12 18 8 15 2Z M15 16 C10 14 5 12 2 13 C6 9 11 10 15 16Z M15 16 C20 14 25 12 28 13 C24 9 19 10 15 16Z" fill="currentColor"/></svg>
+      <p>સોનેરી કાર્ડને આંગળીથી ઘસો અને શુભ ઘડી જુઓ.</p>
+    </div>
+    <div class="scratch reveal" id="scratch">
+      <div class="scratch-under">
+        <div class="su-eyebrow">હસ્તમેળાપ</div>
+        <div class="su-day gold-text">સોમવાર</div>
+        <div class="su-date">તા. ૧૪ ડિસેમ્બર ૨૦૨૬</div>
+        <div class="su-time">સવારે ૧૦:૦૦ કલાકે</div>
+        <div class="su-tithi">માગશર સુદ પાંચમ · સંવત ૨૦૮૩</div>
+      </div>
+      <canvas id="scratchCv" tabindex="0" aria-label="ઘસીને શુભ મુહૂર્ત જુઓ, અથવા Enter દબાવો"></canvas>
+    </div>
+    <div class="scratch-skip"><button class="link-btn" id="scratchSkip" type="button">ઘસ્યા વગર જુઓ</button></div>
+  </div>
+</section>
+
 <!-- ================= COUNTDOWN ================= -->
 <section id="countdown">
   <div class="wrap">
@@ -598,6 +976,10 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
       <div><b id="cdS">૦</b><span>સેકન્ડ</span></div>
     </div>
     <p class="cd-note reveal" id="cdNote">આપની હાજરી અને આશીર્વાદ આ અવસરને અવિસ્મરણીય બનાવશે.</p>
+    <div class="cal-btns reveal">
+      <a class="btn btn-line" id="calHast" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></svg>હસ્તમેળાપ — કેલેન્ડરમાં ઉમેરો</a>
+      <a class="btn btn-line" id="calUpa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></svg>યજ્ઞોપવીત — કેલેન્ડરમાં ઉમેરો</a>
+    </div>
   </div>
 </section>
 
@@ -751,10 +1133,12 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
     </div>
   </div>
 </section>
+<div class="ribbon rev" aria-hidden="true"><div class="track"></div></div>
 </main>
 
 <footer>
-  <div class="mono"><span>પ<small>&amp;</small>નિ</span></div>
+  <div class="dust" aria-hidden="true" data-n="22"></div>
+  <svg class="crest-lg" viewBox="0 0 200 200" role="img" aria-label="Piyush &amp; Nikhar"><use href="#crest"/></svg>
   <div class="fn gold-text">પીયૂષ &amp; નિખાર</div>
   <div class="divider"><svg viewBox="0 0 30 18"><path d="M15 2 C12 8 12 12 15 16 C18 12 18 8 15 2Z M15 16 C10 14 5 12 2 13 C6 9 11 10 15 16Z M15 16 C20 14 25 12 28 13 C24 9 19 10 15 16Z" fill="currentColor"/></svg></div>
   <p>મહેતા પરિવાર તરફથી સ્નેહભર્યા વંદન.<br>આપની સ્નેહભરી હાજરીની આતુરતાથી રાહ જોઈએ છીએ.</p>
@@ -849,7 +1233,7 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
     mount.appendChild(h);
     const g = document.createElement('div'); g.className = 'events' + (day.ev.length === 1 ? ' one' : '');
     day.ev.forEach(e => {
-      const c = document.createElement('article'); c.className = 'ev reveal' + (e.main ? ' main' : '');
+      const c = document.createElement('article'); c.className = 'ev reveal' + (e.main ? ' main' : ''); c.setAttribute('data-tilt', '');
       c.innerHTML = (e.main ? '<span class="badge">શુભ મુહૂર્ત</span>' : '') +
         `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">${ICONS[e.i]}</svg>` +
         `<div class="time">${e.t}</div><h3>${e.n}</h3><p>${e.p}</p><div class="place">${PIN}${e.v}</div>`;
@@ -862,16 +1246,80 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+  /* ---------- premium effects ---------- */
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // gold dust
+  if (!calm) document.querySelectorAll('.dust').forEach(box => {
+    const n = +box.dataset.n || 24;
+    for (let i = 0; i < n; i++) {
+      const d = document.createElement('i');
+      d.style.cssText = `left:${Math.random()*100}%;top:${10 + Math.random()*85}%;--s:${3 + Math.random()*5}px;--d:${4 + Math.random()*6}s;--dl:${-Math.random()*8}s`;
+      box.appendChild(d);
+    }
+  });
+  // scroll progress
+  const bar = $('#progress'); let ticking = false;
+  addEventListener('scroll', () => {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(() => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`; ticking = false;
+    });
+  }, { passive: true });
+  // 3D tilt on photos and cards (mouse only)
+  if (!calm && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.querySelectorAll('[data-tilt]').forEach(el => {
+      el.addEventListener('pointermove', e => {
+        const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        el.style.transform = `perspective(900px) rotateY(${x * 9}deg) rotateX(${-y * 9}deg) translateY(-4px)`;
+      });
+      el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+    });
+  }
+
+  /* ---------- name ribbons ---------- */
+  const RIB = [['શુભ વિવાહ'], ['Piyush & Nikhar', 'en'], ['૧૪ · ૧૨ · ૨૦૨૬'], ['યજ્ઞોપવીત સંસ્કાર'], ['ચિ. અક્ષય'], ['૧૩ · ૧૨ · ૨૦૨૬'], ['મહેતા પરિવાર']];
+  document.querySelectorAll('.ribbon .track').forEach(t => {
+    for (let k = 0; k < 2; k++) RIB.forEach(([txt, cls]) => {
+      const s = document.createElement('span'); s.textContent = txt; if (cls) s.className = cls;
+      const b = document.createElement('b'); b.textContent = '✦';
+      t.append(s, b);
+    });
+  });
+
+  /* ---------- sticky nav: show after hero, highlight current section ---------- */
+  const nav = $('#topnav'), hero = $('#home');
+  const navLinks = [...nav.querySelectorAll('a')];
+  addEventListener('scroll', () => nav.classList.toggle('show', scrollY > hero.offsetHeight * .75), { passive: true });
+  const secIO = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    navLinks.forEach(a => {
+      const on = a.getAttribute('href') === '#' + e.target.id;
+      a.classList.toggle('active', on);
+      if (on) nav.scrollTo({ left: a.offsetLeft - nav.clientWidth / 2 + a.offsetWidth / 2, behavior: 'smooth' });
+    });
+  }), { rootMargin: '-45% 0px -50% 0px' });
+  navLinks.forEach(a => { const s = document.querySelector(a.getAttribute('href')); if (s) secIO.observe(s); });
+
+  /* ---------- add to Google Calendar ---------- */
+  const gcal = (title, dates, loc) => 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+    + '&text=' + encodeURIComponent(title) + '&dates=' + dates
+    + '&location=' + encodeURIComponent(loc) + '&details=' + encodeURIComponent('મહેતા પરિવાર તરફથી સ્નેહભર્યું આમંત્રણ\n' + location.origin + location.pathname);
+  $('#calHast').href = gcal('ચિ. પીયૂષ સંગ ચિ. નિખાર — હસ્તમેળાપ', '20261214T043000Z/20261214T073000Z', 'Shree Audichya Gohilwadi Brahmsamaj Bhavan, Banglawadi, Jam Khambhalia 361305');
+  $('#calUpa').href = gcal('ચિ. અક્ષય — યજ્ઞોપવીત સંસ્કાર', '20261213T043000Z/20261213T063000Z', 'Brahmsamaj, Bagdhara, Jamjodhpur, Jamnagar 360480');
+
   /* ---------- countdown ---------- */
   const target = new Date('2026-12-14T10:00:00+05:30').getTime();
   const pad = n => gu(String(n).padStart(2, '0'));
   function tick(){
     let s = Math.max(0, Math.floor((target - Date.now()) / 1000));
     if (s === 0) { $('#cdNote').textContent = 'શુભ ઘડી આવી પહોંચી! નવદંપતીને આશીર્વાદ આપો.'; }
-    $('#cdD').textContent = gu(Math.floor(s / 86400)); s %= 86400;
-    $('#cdH').textContent = pad(Math.floor(s / 3600)); s %= 3600;
-    $('#cdM').textContent = pad(Math.floor(s / 60));
-    $('#cdS').textContent = pad(s % 60);
+    const set = (id, v) => { const el = $(id); if (el.textContent === v) return; el.textContent = v;
+      if (el.animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) el.animate([{ transform: 'translateY(-8px)', opacity: .2 }, { transform: 'none', opacity: 1 }], { duration: 380, easing: 'ease-out' }); };
+    set('#cdD', gu(Math.floor(s / 86400))); s %= 86400;
+    set('#cdH', pad(Math.floor(s / 3600))); s %= 3600;
+    set('#cdM', pad(Math.floor(s / 60)));
+    set('#cdS', pad(s % 60));
   }
   tick(); setInterval(tick, 1000);
 
@@ -1040,6 +1488,142 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
     if (navigator.share) { try { await navigator.share({ title: document.title, text, url }); } catch (e) {} }
     else { open('https://wa.me/?text=' + encodeURIComponent(text + ' ' + url), '_blank', 'noopener'); }
   });
+
+  /* ---------- saptapadi: seven vows flip cards ---------- */
+  const VOWS = [
+    ['પ્રથમ વચન', 'અન્ન અને પોષણ', 'આપણે સાથે મળીને ઘરને અન્ન-ધાન્યથી ભરપૂર રાખીશું અને એકબીજાનું પોષણ કરીશું.'],
+    ['દ્વિતીય વચન', 'શક્તિ અને આરોગ્ય', 'આપણે એકબીજાને શારીરિક, માનસિક અને આધ્યાત્મિક બળ આપીશું.'],
+    ['તૃતીય વચન', 'સુખ અને સમૃદ્ધિ', 'પ્રામાણિક પરિશ્રમથી સુખ-સમૃદ્ધિ મેળવી, સાથે મળીને તેનું જતન કરીશું.'],
+    ['ચતુર્થ વચન', 'પરિવાર અને પ્રેમ', 'એકબીજાના પરિવાર અને વડીલોને પ્રેમ અને આદર આપીશું.'],
+    ['પંચમ વચન', 'સંતાન અને સંસ્કાર', 'આપણાં સંતાનોને સ્નેહ અને સંસ્કારથી ઉછેરીશું.'],
+    ['ષષ્ઠ વચન', 'દરેક ઋતુમાં સાથ', 'જીવનની દરેક ઋતુમાં, સુખ-દુઃખમાં, હંમેશાં એકબીજાની સાથે રહીશું.'],
+    ['સપ્તમ વચન', 'મૈત્રી', 'આપણે જીવનભર સાચા મિત્ર અને સાથી બનીને રહીશું.']
+  ];
+  const vowsBox = $('#vows');
+  VOWS.forEach(([t, s, b], i) => {
+    const el = document.createElement('button');
+    el.type = 'button'; el.className = 'vow reveal'; el.setAttribute('aria-pressed', 'false');
+    el.style.transitionDelay = (i % 4) * 80 + 'ms';
+    el.innerHTML = `<span class="vow-in">
+        <span class="vow-f"><span class="num">${gu(i + 1)}</span><span class="vt">${t}</span><span class="vs">${s}</span><span class="tap">સ્પર્શ કરો ↻</span></span>
+        <span class="vow-b"><span class="feet">✦ ${gu(i + 1)} ✦</span><span class="vt">${t}</span><span class="vb">${b}</span></span>
+      </span>`;
+    el.addEventListener('click', () => { const on = el.classList.toggle('flipped'); el.setAttribute('aria-pressed', on); });
+    vowsBox.appendChild(el); io.observe(el);
+  });
+
+  /* ---------- scratch to reveal the muhurat ---------- */
+  (() => {
+    const box = $('#scratch'), cv = $('#scratchCv'), cx = cv.getContext('2d', { willReadFrequently: true }), skip = $('#scratchSkip');
+    let done = false, drawing = false, last = null, moves = 0, w = 0;
+    function paint(){
+      const r = box.getBoundingClientRect(), d = devicePixelRatio || 1;
+      if (!r.width) return;
+      w = r.width; cv.width = r.width * d; cv.height = r.height * d; cx.setTransform(d, 0, 0, d, 0, 0);
+      cx.globalCompositeOperation = 'source-over';
+      const g = cx.createLinearGradient(0, 0, r.width, r.height);
+      g.addColorStop(0, '#8a6424'); g.addColorStop(.3, '#d9b468'); g.addColorStop(.5, '#f6e2a6'); g.addColorStop(.7, '#c9a050'); g.addColorStop(1, '#8a6424');
+      cx.fillStyle = g; cx.fillRect(0, 0, r.width, r.height);
+      cx.strokeStyle = 'rgba(255,255,255,.09)'; cx.lineWidth = 1;
+      for (let x = -r.height; x < r.width; x += 7) { cx.beginPath(); cx.moveTo(x, 0); cx.lineTo(x + r.height, r.height); cx.stroke(); }
+      cx.strokeStyle = 'rgba(255,246,220,.75)'; cx.lineWidth = 1.2; cx.strokeRect(12, 12, r.width - 24, r.height - 24);
+      cx.strokeStyle = 'rgba(255,246,220,.35)'; cx.strokeRect(17, 17, r.width - 34, r.height - 34);
+      cx.fillStyle = '#3d2a0c'; cx.textAlign = 'center'; cx.textBaseline = 'middle';
+      cx.font = '600 15px "Hind Vadodara", sans-serif'; cx.fillText('✦  શુભ મુહૂર્ત  ✦', r.width / 2, r.height / 2 - 32);
+      cx.font = '700 30px "Rasa", serif'; cx.fillText('અહીં ઘસો', r.width / 2, r.height / 2 + 4);
+      cx.font = '400 14px "Hind Vadodara", sans-serif'; cx.fillText('☝ આંગળીથી ઘસો', r.width / 2, r.height / 2 + 40);
+    }
+    const pos = e => { const r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+    function scratchAt(p){
+      cx.globalCompositeOperation = 'destination-out'; cx.strokeStyle = '#000'; cx.lineCap = cx.lineJoin = 'round'; cx.lineWidth = 46;
+      cx.beginPath(); cx.moveTo((last || p).x, (last || p).y); cx.lineTo(p.x + .01, p.y); cx.stroke(); last = p;
+      if (++moves % 10 === 0) check();
+    }
+    function check(){
+      const d = cx.getImageData(0, 0, cv.width, cv.height).data; let clear = 0, tot = 0;
+      for (let i = 3; i < d.length; i += 4 * 37) { tot++; if (d[i] < 40) clear++; }
+      if (tot && clear / tot > .48) reveal();
+    }
+    function reveal(){
+      if (done) return; done = true; box.classList.add('done'); skip.style.visibility = 'hidden';
+      burst(reduce ? 0 : 60); toast('શુભ ઘડી: સોમવાર, સવારે ૧૦:૦૦ કલાકે 💐');
+    }
+    cv.addEventListener('pointerdown', e => { if (done) return; drawing = true; last = null; try { cv.setPointerCapture(e.pointerId); } catch (x) {} scratchAt(pos(e)); });
+    cv.addEventListener('pointermove', e => { if (drawing && !done) scratchAt(pos(e)); });
+    ['pointerup', 'pointercancel'].forEach(t => cv.addEventListener(t, () => { drawing = false; last = null; if (!done) check(); }));
+    cv.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); reveal(); } });
+    skip.addEventListener('click', reveal);
+    document.fonts.ready.then(paint);
+    addEventListener('resize', () => { if (!done && box.clientWidth !== w) paint(); });
+  })();
+
+  /* ---------- private sender page: open the site with ?send ---------- */
+  if (params.has('send')) {
+    $('#sender').hidden = false; env.style.display = 'none';
+    document.title = 'આમંત્રણ મોકલો · પીયૂષ સંગ નિખાર';
+    const base = location.origin + location.pathname;
+    const nameI = $('#sName'), phoneI = $('#sPhone'), msgI = $('#sMsg');
+    const linkFor = n => base + '?v=2' + (n ? '&to=' + encodeURIComponent(n) : '');
+    const tmpl = n => '🙏 ॥ શ્રી ગણેશાય નમઃ ॥ 🙏\n\n'
+      + 'સ્નેહી શ્રી *' + (n || '...') + '*,\n\n'
+      + 'ચિ. *પીયૂષ* ના શુભ લગ્ન ચિ. *નિખાર* સાથે તથા ચિ. *અક્ષય* ના યજ્ઞોપવીત સંસ્કારના મંગલ પ્રસંગે આપને સહપરિવાર પધારવા ભાવભર્યું આમંત્રણ છે. 💐\n\n'
+      + '🪔 યજ્ઞોપવીત: રવિવાર, તા. ૧૩-૧૨-૨૦૨૬\n'
+      + '💐 શુભ લગ્ન: સોમવાર, તા. ૧૪-૧૨-૨૦૨૬\n\n'
+      + 'આપના માટે ખાસ કંકોત્રી 👇\n' + linkFor(n) + '\n\n'
+      + '🙏 મહેતા પરિવાર';
+    const refresh = () => { const n = nameI.value.trim(); msgI.value = tmpl(n); $('#sPreview').href = linkFor(n); };
+    nameI.addEventListener('input', refresh); refresh();
+    const normPhone = p => {
+      let d = String(p || '').replace(/\D/g, '');
+      if (d.length === 11 && d[0] === '0') d = d.slice(1);
+      if (d.length === 10) d = '91' + d;
+      return d.length >= 11 && d.length <= 13 ? d : '';
+    };
+    if ('contacts' in navigator && navigator.contacts && 'select' in navigator.contacts) {
+      const pb = $('#pickBtn'); pb.hidden = false;
+      pb.addEventListener('click', async () => {
+        try {
+          const [c] = await navigator.contacts.select(['name', 'tel'], { multiple: false });
+          if (!c) return;
+          nameI.value = ((c.name && c.name[0]) || '').trim();
+          phoneI.value = (c.tel && c.tel[0]) || '';
+          refresh(); nameI.focus();
+          $('#sHint').textContent = 'જરૂર હોય તો નામ સુધારો (દા.ત. "Ramesh Kaka" → "રમેશભાઈ").';
+        } catch (e) {}
+      });
+    } else {
+      $('#sHint').textContent = 'આ ફોન/બ્રાઉઝરમાં contact યાદી ખૂલી શકતી નથી (iPhone) — નામ જાતે લખો. Android પર Chrome માં "Contact પસંદ કરો" બટન દેખાશે.';
+    }
+    const KEY = 'pn-sent';
+    const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } };
+    const save = a => { try { localStorage.setItem(KEY, JSON.stringify(a)); } catch (e) {} };
+    const renderLog = () => {
+      const a = load(), ul = $('#sList');
+      $('#sCount').textContent = a.length ? '(' + gu(a.length) + ')' : '';
+      if (!a.length) return;
+      ul.textContent = '';
+      a.slice().reverse().forEach(x => {
+        const li = document.createElement('li'), s = document.createElement('small');
+        li.textContent = '✓ ' + x.n;
+        s.textContent = new Date(x.t).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+        li.append(s); ul.append(li);
+      });
+    };
+    renderLog();
+    $('#sSend').addEventListener('click', () => {
+      const n = nameI.value.trim();
+      if (!n) { nameI.focus(); toast('મહેમાનનું નામ લખો'); return; }
+      const ph = normPhone(phoneI.value);
+      if (phoneI.value.trim() && !ph) { phoneI.focus(); toast('WhatsApp નંબર બરાબર નથી'); return; }
+      open('https://wa.me/' + ph + '?text=' + encodeURIComponent(msgI.value), '_blank', 'noopener');
+      const a = load(); a.push({ n, t: Date.now() }); save(a); renderLog();
+      nameI.value = ''; phoneI.value = ''; refresh();
+    });
+    $('#sCopy').addEventListener('click', async () => {
+      const l = linkFor(nameI.value.trim());
+      try { await navigator.clipboard.writeText(l); toast('લિંક કૉપી થઈ ગઈ'); } catch (e) { prompt('આ લિંક કૉપી કરો:', l); }
+    });
+  }
 })();
 </script>
 </body>
