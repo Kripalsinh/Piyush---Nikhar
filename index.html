@@ -776,8 +776,13 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
 </div>
 <div class="toast" id="toast"></div>
 
-<!-- Optional: put a file named music.mp3 next to index.html and a music button appears -->
-<audio id="music" src="music.mp3.webm" loop preload="auto"></audio>
+<!-- Your song, next to index.html. The first file that exists and the phone can play is used;
+     if none works, the built-in shehnai tune plays instead. -->
+<audio id="music" loop preload="auto">
+  <source src="music.mp3.webm" type="audio/webm">
+  <source src="music.webm" type="audio/webm">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 (function(){
@@ -904,7 +909,7 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
   let tt; const toast = msg => { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2600); };
 
   /* ---------- music ----------
-     If a file named music.mp3 sits next to index.html it is played.
+     If your song (music.mp3.webm / music.webm / music.mp3) sits next to index.html it is played.
      Otherwise an original shehnai + tanpura + dholak tune (Raag Bhupali) is played live in the browser. */
   const audio = $('#music'), mb = $('#musicBtn');
   let fileOK = false, playing = false;
@@ -984,6 +989,7 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
       while (nR < ahead) { const p = DR[iR % 8]; if (p.includes('L')) drum(nR, true); if (p.includes('H')) drum(nR, false); nR += BEAT; iR++; }
     }
     return {
+      unlock(){ if (!ctx) init(); ctx.resume(); },
       start(){
         clearTimeout(offTimer);
         if (!ctx) init();
@@ -999,7 +1005,12 @@ footer .top{display:inline-block;margin-top:26px;font-family:var(--gu-sans);font
     };
   })();
 
-  function playMusic(){ playing = true; mb.classList.add('playing'); mb.setAttribute('aria-label', 'સંગીત બંધ કરો'); if (fileOK) audio.play().catch(() => {}); else Shehnai.start(); }
+  function playMusic(){
+    playing = true; mb.classList.add('playing'); mb.setAttribute('aria-label', 'સંગીત બંધ કરો');
+    Shehnai.unlock();   // keep the built-in tune ready; phones only allow this inside the tap
+    // Try your song first (phones often haven't loaded it yet, so don't wait for 'canplay')
+    audio.play().then(() => { fileOK = true; }).catch(() => { fileOK = false; if (playing) Shehnai.start(); });
+  }
   function pauseMusic(){ playing = false; mb.classList.remove('playing'); mb.setAttribute('aria-label', 'સંગીત ચાલુ કરો'); audio.pause(); Shehnai.stop(); }
   mb.classList.add('ready');
   mb.addEventListener('click', () => playing ? pauseMusic() : playMusic());
